@@ -11,7 +11,7 @@ variables:
   group: Terraform-BuildVariables
   ${{ if eq(variables['Build.SourceBranchName'], 'Development') }}: 
     stageName: "dev"
-    subscription_id: "$(subscription-id)-dev"
+    subscription_id: $(subscription-id)"-dev"
     storage_accounts: "terraformdevops01"
     sa_resource_group: DevOps
 
