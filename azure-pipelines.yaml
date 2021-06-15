@@ -34,7 +34,7 @@ steps:
     inputs:
       terraformVersion: 0.13.5
 
-  - script:  az login --service-principal -u $(terraform-appId) -p $(terraform-password) --tenant $(terraform-tenant)
+  - script:  az login --service-principal -u $(devops-service-principal-client-id) -p $(devops-service-principal-secret) --tenant $(devops-service-principal-tenant-id)
     displayName: 'Log Into Azure'
 
   - script: terraform init -backend-config=resource_group_name=${{variables.sa_resource_group}} -backend-config="storage_account_name=${{variables.storage_accounts}}" -backend-config="container_name=${{variables.blob_storage}}" -backend-config="access_key=$(terraformdevops01-key1)" -backend-config="key=${{variables.state_file}}"
@@ -45,12 +45,12 @@ steps:
     displayName: 'Terraform Validate' 
     workingDirectory: $(System.DefaultWorkingDirectory)/demo
 
-  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(terraform-appId)" -var="client_secret=$(terraform-password)" -var="tenant_id=$(terraform-tenant)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
+  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
     displayName: 'Terraform Plan'
     workingDirectory: $(System.DefaultWorkingDirectory)/demo
   
   # Delete everything by uncommenting the following section
-  # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(terraform-appId)" -var="client_secret=$(terraform-password)" -var="tenant_id=$(terraform-tenant)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
+  # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
   #   displayName: 'Terraform Plan -destroy '
   #   workingDirectory: $(System.DefaultWorkingDirectory)/demo
 
