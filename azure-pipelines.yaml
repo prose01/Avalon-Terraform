@@ -1,7 +1,7 @@
 trigger:
   paths:
     include:
-      - /demo/variables.tf
+      - /Avalon-Teraform/variables.tf
       - /v/main.tf
 
 pool:
@@ -39,25 +39,25 @@ steps:
 
   - script: terraform init -backend-config=resource_group_name=${{variables.sa_resource_group}} -backend-config="storage_account_name=${{variables.storage_accounts}}" -backend-config="container_name=${{variables.blob_storage}}" -backend-config="access_key=$(terraformdevops01-key1)" -backend-config="key=${{variables.state_file}}"
     displayName: 'Terraform Init'
-    workingDirectory: $(System.DefaultWorkingDirectory)/demo
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
   
   - script: terraform validate
     displayName: 'Terraform Validate' 
-    workingDirectory: $(System.DefaultWorkingDirectory)/demo
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
   - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
     displayName: 'Terraform Plan'
-    workingDirectory: $(System.DefaultWorkingDirectory)/demo
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
   
   # Delete everything by uncommenting the following section
   # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{ variables.stageName }}"
   #   displayName: 'Terraform Plan -destroy '
-  #   workingDirectory: $(System.DefaultWorkingDirectory)/demo
+  #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
   - task: ArchiveFiles@2
     displayName: 'Archive Terraform Plan Files'
     inputs:
-      rootFolderOrFile: demo
+      rootFolderOrFile: Avalon-Teraform
       archiveType: tar
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-tfplan.tgz'
 
@@ -69,4 +69,4 @@ steps:
 
   # - script: terraform apply out.plan
   #   displayName: 'Terraform Apply'
-  #   workingDirectory: $(System.DefaultWorkingDirectory)/demo
+  #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
