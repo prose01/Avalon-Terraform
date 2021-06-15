@@ -24,7 +24,7 @@ variables:
   ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
     stageName: "prod"
   
-  blob_storage: "terraform-state-${{ variables.stageName }}"
+  blob_storage: "avalon-terraform-state-${{ variables.stageName }}"
   state_file: "tf-statefile.state"
 
 steps:
