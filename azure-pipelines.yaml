@@ -11,15 +11,15 @@ variables:
   group: Terraform-BuildVariables
   ${{ if eq(variables['Build.SourceBranchName'], 'Development') }}: 
     stageName: "dev"
-    subscription_id: "xxx"
-    storage_accounts: "azuredevops01sa"
-    sa_resource_group: AzureDevOps
+    subscription_id: $(subscription-id)
+    storage_accounts: "terraformdevops01"
+    sa_resource_group: DevOps
 
   ${{ if eq(variables['Build.SourceBranchName'], 'Test') }}: 
     stageName: "test"
-    subscription_id: "xxx"
-    storage_accounts: "azuredevops01sa"
-    sa_resource_group: AzureDevOps
+    subscription_id: $(subscription-id)
+    storage_accounts: "terraformdevops01"
+    sa_resource_group: DevOps
     
   ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
     stageName: "prod"
@@ -37,7 +37,7 @@ steps:
   - script:  az login --service-principal -u $(terraform-appId) -p $(terraform-password) --tenant $(terraform-tenant)
     displayName: 'Log Into Azure'
 
-  - script: terraform init -backend-config=resource_group_name=${{variables.sa_resource_group}} -backend-config="storage_account_name=${{variables.storage_accounts}}" -backend-config="container_name=${{variables.blob_storage}}" -backend-config="access_key=$(azuredevops01sa-key1)" -backend-config="key=${{variables.state_file}}"
+  - script: terraform init -backend-config=resource_group_name=${{variables.sa_resource_group}} -backend-config="storage_account_name=${{variables.storage_accounts}}" -backend-config="container_name=${{variables.blob_storage}}" -backend-config="access_key=$(terraformdevops01-key1)" -backend-config="key=${{variables.state_file}}"
     displayName: 'Terraform Init'
     workingDirectory: $(System.DefaultWorkingDirectory)/demo
   
