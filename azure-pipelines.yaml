@@ -11,7 +11,7 @@ variables:
   group: Terraform-BuildVariables
   ${{ if eq(variables['Build.SourceBranchName'], 'Development') }}: 
     stageName: "dev"
-    subscription_id: $(subscription-id)"-dev"
+    subscription_id: "$(subscription-id-dev)"
     storage_accounts: "terraformdevops01"
     sa_resource_group: DevOps
 
@@ -28,7 +28,7 @@ variables:
   state_file: "tf-statefile.state"
 
 steps:
-  - script: echo $(subscription_id) 
+  - script: echo $(subscription-id-dev) 
   # - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
   #   displayName: 'Install Terraform 0.13.5'
   #   inputs:
