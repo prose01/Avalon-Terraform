@@ -62,6 +62,7 @@ resource "azurerm_app_service" "avalon" {
 
     site_config {
         dotnet_framework_version = "v5.0"
+        linux_fx_version = "v5.0"
         # remote_debugging_enabled = true
         # remote_debugging_version = "VS2019"
         always_on = "true"
@@ -91,7 +92,7 @@ resource "azurerm_app_service" "avalon" {
         http_logs {
             file_system {
                 retention_in_mb = 30     # in Megabytes
-                retention_in_days = 30     # in days
+                retention_in_days = "${var.sourceBranchName} == main" ? 30 : 7 # in days
             }
         }
     }
@@ -160,24 +161,24 @@ resource "azurerm_app_service" "avalon" {
 #  retention_in_days   = 730
 # }
 
-# Create storage account
-resource "azurerm_storage_account" "avalonstorageaccount" {
-    name                        = "${random_id.randomId.hex}${var.sourceBranchName}"
-    resource_group_name         = azurerm_resource_group.avalon-group.name
-    location                    = azurerm_resource_group.avalon-group.location
-    account_replication_type    = "${var.storage_replication_type}"
-    account_tier                = "${var.storage_account_tier}"
+# # Create storage account
+# resource "azurerm_storage_account" "avalonstorageaccount" {
+#     name                        = "${random_id.randomId.hex}${var.sourceBranchName}"
+#     resource_group_name         = azurerm_resource_group.avalon-group.name
+#     location                    = azurerm_resource_group.avalon-group.location
+#     account_replication_type    = "${var.storage_replication_type}"
+#     account_tier                = "${var.storage_account_tier}"
 
-    tags = {
-        Avalon = azurerm_resource_group.avalon-group.tags.Avalon
-    }
-}
+#     tags = {
+#         Avalon = azurerm_resource_group.avalon-group.tags.Avalon
+#     }
+# }
 
-# Create container
-resource "azurerm_storage_container" "avaloncontainer" {
-  name                 = "avalonstoragecontainer-${var.sourceBranchName}"
-  storage_account_name = azurerm_storage_account.avalonstorageaccount.name
-}
+# # Create container
+# resource "azurerm_storage_container" "avaloncontainer" {
+#   name                 = "avalonstoragecontainer-${var.sourceBranchName}"
+#   storage_account_name = azurerm_storage_account.avalonstorageaccount.name
+# }
 
 # # Create sql server
 # resource "azurerm_sql_server" "demosqlserver" {
