@@ -19,7 +19,7 @@ provider "azurerm" {
 # resource "random_id" "randomId" {
 #     keepers = {
 #         # Generate a new ID only when a new resource group is defined
-#         resource_group = azurerm_resource_group.myterraformgroup.name
+#         resource_group = azurerm_resource_group.avalon-group.name
 #     }
 
 #     byte_length = 8
@@ -49,7 +49,7 @@ resource "azurerm_app_service_plan" "avalon-plan" {
     }
 
     tags = {
-        Avalon = azurerm_resource_group.myterraformgroup.tags.Avalon
+        Avalon = azurerm_resource_group.avalon-group.tags.Avalon
     }
 }
 
@@ -97,7 +97,7 @@ resource "azurerm_app_service" "avalon" {
     }
 
     tags = {       
-        Avalon = azurerm_resource_group.myterraformgroup.tags.Avalon
+        Avalon = azurerm_resource_group.avalon-group.tags.Avalon
     }
 }
 
@@ -146,22 +146,22 @@ resource "azurerm_app_service" "avalon" {
 #     }
 
 #     tags = {       
-#         Avalon = azurerm_resource_group.myterraformgroup.tags.Avalon
+#         Avalon = azurerm_resource_group.avalon-group.tags.Avalon
 #     }
 # }
 
 # Create storage account
 # resource "azurerm_storage_account" "mystorageaccount" {
 #     name                        = "${random_id.randomId.hex}${var.sourceBranchName}"
-#     resource_group_name         = azurerm_resource_group.myterraformgroup.name
-#     location                    = azurerm_resource_group.myterraformgroup.location
+#     resource_group_name         = azurerm_resource_group.avalon-group.name
+#     location                    = azurerm_resource_group.avalon-group.location
 #     account_replication_type    = "${var.storage_replication_type}"
 #     account_tier                = "${var.storage_account_tier}"
 
 #     tags = {
-#         environment = azurerm_resource_group.myterraformgroup.tags.environment
-#         build       = azurerm_resource_group.myterraformgroup.tags.build
-#         myterraformgroup = azurerm_resource_group.myterraformgroup.tags.myterraformgroup
+#         environment = azurerm_resource_group.avalon-group.tags.environment
+#         build       = azurerm_resource_group.avalon-group.tags.build
+#         myterraformgroup = azurerm_resource_group.avalon-group.tags.myterraformgroup
 #     }
 # }
 
@@ -174,24 +174,24 @@ resource "azurerm_app_service" "avalon" {
 # # Create sql server
 # resource "azurerm_sql_server" "demosqlserver" {
 #   name                         = "msdemosqlserver-${var.sourceBranchName}"
-#   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-#   location                     = azurerm_resource_group.myterraformgroup.location
+#   resource_group_name          = azurerm_resource_group.avalon-group.name
+#   location                     = azurerm_resource_group.avalon-group.location
 #   version                      = "12.0"
 #   administrator_login          = "${var.administrator_login}"
 #   administrator_login_password = "thisIsDog11"
 
 #   tags = {
-#        environment = azurerm_resource_group.myterraformgroup.tags.environment
-#        build       = azurerm_resource_group.myterraformgroup.tags.build
-#        myterraformgroup = azurerm_resource_group.myterraformgroup.tags.myterraformgroup
+#        environment = azurerm_resource_group.avalon-group.tags.environment
+#        build       = azurerm_resource_group.avalon-group.tags.build
+#        myterraformgroup = azurerm_resource_group.avalon-group.tags.myterraformgroup
 #   }
 # }
 
 # # Create sql database
 # resource "azurerm_sql_database" "demosqldatabase" {
 #   name                = "mydemosqldatabase-${var.sourceBranchName}"
-#   resource_group_name = azurerm_resource_group.myterraformgroup.name
-#   location            = azurerm_resource_group.myterraformgroup.location
+#   resource_group_name = azurerm_resource_group.avalon-group.name
+#   location            = azurerm_resource_group.avalon-group.location
 #   server_name         = azurerm_sql_server.demosqlserver.name
 
 #   extended_auditing_policy {
@@ -202,8 +202,8 @@ resource "azurerm_app_service" "avalon" {
 #   }
 
 #   tags = {
-#        environment = azurerm_resource_group.myterraformgroup.tags.environment
-#        build       = azurerm_resource_group.myterraformgroup.tags.build
-#        myterraformgroup = azurerm_resource_group.myterraformgroup.tags.myterraformgroup
+#        environment = azurerm_resource_group.avalon-group.tags.environment
+#        build       = azurerm_resource_group.avalon-group.tags.build
+#        myterraformgroup = azurerm_resource_group.avalon-group.tags.myterraformgroup
 #   }
 # }
