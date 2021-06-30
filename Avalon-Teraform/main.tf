@@ -88,7 +88,7 @@ resource "azurerm_app_service" "avalon" {
     }
 
     logs {
-        application_logs {
+        http_logs {
             file_system {
                 quota = 30     # in Megabytes
                 retention_period = 30     # in days
@@ -148,6 +148,16 @@ resource "azurerm_app_service" "avalon" {
 #     tags = {       
 #         Avalon = azurerm_resource_group.avalon-group.tags.Avalon
 #     }
+# }
+
+# # Create application insights
+# resource "azurerm_application_insights" "my_app_insight" {
+#  name                = "my_app_insight"
+#  location            = "France central"
+#  resource_group_name = "MYRG"
+#  application_type    = "Node.JS" # Depends on your application
+#  disable_ip_masking  = true
+#  retention_in_days   = 730
 # }
 
 # Create storage account
