@@ -15,15 +15,15 @@ provider "azurerm" {
     features {}
 }
 
-# # Generate random text for a unique name
-# resource "random_id" "randomId" {
-#     keepers = {
-#         # Generate a new ID only when a new resource group is defined
-#         resource_group = azurerm_resource_group.avalon-group.name
-#     }
+# Generate random text for a unique name
+resource "random_id" "randomId" {
+    keepers = {
+        # Generate a new ID only when a new resource group is defined
+        resource_group = azurerm_resource_group.avalon-group.name
+    }
 
-#     byte_length = 8
-# }
+    byte_length = 8
+}
 
 # Create resource group
 resource "azurerm_resource_group" "avalon-group" {
@@ -161,25 +161,23 @@ resource "azurerm_app_service" "avalon" {
 # }
 
 # Create storage account
-# resource "azurerm_storage_account" "mystorageaccount" {
-#     name                        = "${random_id.randomId.hex}${var.sourceBranchName}"
-#     resource_group_name         = azurerm_resource_group.avalon-group.name
-#     location                    = azurerm_resource_group.avalon-group.location
-#     account_replication_type    = "${var.storage_replication_type}"
-#     account_tier                = "${var.storage_account_tier}"
+resource "azurerm_storage_account" "avalonstorageaccount" {
+    name                        = "${random_id.randomId.hex}${var.sourceBranchName}"
+    resource_group_name         = azurerm_resource_group.avalon-group.name
+    location                    = azurerm_resource_group.avalon-group.location
+    account_replication_type    = "${var.storage_replication_type}"
+    account_tier                = "${var.storage_account_tier}"
 
-#     tags = {
-#         environment = azurerm_resource_group.avalon-group.tags.environment
-#         build       = azurerm_resource_group.avalon-group.tags.build
-#         myterraformgroup = azurerm_resource_group.avalon-group.tags.myterraformgroup
-#     }
-# }
+    tags = {
+        Avalon = azurerm_resource_group.avalon-group.tags.Avalon
+    }
+}
 
 # Create container
-# resource "azurerm_storage_container" "mycontainer" {
-#   name                 = "mystoragecontainer-${var.sourceBranchName}"
-#   storage_account_name = azurerm_storage_account.mystorageaccount.name
-# }
+resource "azurerm_storage_container" "avaloncontainer" {
+  name                 = "avalonstoragecontainer-${var.sourceBranchName}"
+  storage_account_name = azurerm_storage_account.avalonstorageaccount.name
+}
 
 # # Create sql server
 # resource "azurerm_sql_server" "demosqlserver" {

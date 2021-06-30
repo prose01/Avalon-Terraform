@@ -36,15 +36,15 @@ variable "location" {
   default     = "West Europe"
 }
 
-# variable "storage_account_tier" {
-#   description = "Defines the storage tier. Valid options are Standard and Premium."
-#   default     = "Standard"
-# }
+variable "storage_account_tier" {
+  description = "Defines the storage tier. Valid options are Standard and Premium."
+  default     = "Standard"
+}
 
-# variable "storage_replication_type" {
-#   description = "Defines the replication type to use for this storage account. Valid options include LRS, GRS etc."
-#   default     = "GRS"
-# }
+variable "storage_replication_type" {
+  description = "Defines the replication type to use for this storage account. Valid options include LRS, GRS etc."
+  default     = "GRS"
+}
 
 # variable "administrator_login" {
 #   description = "Administrator user name"
