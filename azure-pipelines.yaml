@@ -26,7 +26,6 @@ variables:
   
   blob_storage: "avalon-terraform-state-${{ variables.stageName }}"
   state_file: "tf-statefile.state"
-  auth0domain: $(auth0domain)
 
 steps:
   # - script: echo ${{variables.subscription_id}}
@@ -46,12 +45,12 @@ steps:
     displayName: 'Terraform Validate' 
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
-  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}"
+  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain)"
     displayName: 'Terraform Plan'
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
   
   # Delete everything by uncommenting the following section
-  # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}"
+  # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain)"
   #   displayName: 'Terraform Plan -destroy '
   #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
