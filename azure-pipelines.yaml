@@ -45,7 +45,7 @@ steps:
     displayName: 'Terraform Validate' 
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
-  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain)"
+  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain)" -var="auth0apiIdentifier=$(auth0apiIdentifier)" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier)" -var="auth0tokenaddress=$(auth0tokenaddress)"
     displayName: 'Terraform Plan'
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
   

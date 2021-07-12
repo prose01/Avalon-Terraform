@@ -65,6 +65,9 @@ resource "azurerm_app_service" "avalon" {
     app_settings = {
         "Mongo_Database" = "Avalon"
         "Auth0_Domain" = "${var.auth0domain}"
+        "Auth0_ApiIdentifier" = "${var.auth0apiIdentifier}"
+        "Auth0_Claims_nameidentifier" = "${var.auth0claimsnameidentifier}"
+        "Auth0_TokenAddress" = "${var.auth0tokenaddress}"
     }
 
     # connection_string {
@@ -143,16 +146,16 @@ resource "azurerm_app_service_slot" "avalon-slot" {
     }
 }
 
-# Create application insights
-resource "azurerm_application_insights" "avalon-insights" {
- name                = "avalon-insights"
- location            = azurerm_resource_group.avalon-group.location
- resource_group_name = azurerm_resource_group.avalon-group.name
- application_type    = "web"
- disable_ip_masking  = false
- retention_in_days   = 30
+# # Create application insights. Obs! Not working for Linux!
+# resource "azurerm_application_insights" "avalon-insights" {
+#  name                = "avalon-insights"
+#  location            = azurerm_resource_group.avalon-group.location
+#  resource_group_name = azurerm_resource_group.avalon-group.name
+#  application_type    = "web"
+#  disable_ip_masking  = false
+#  retention_in_days   = 30
 
- tags = {       
-        Avalon = azurerm_resource_group.avalon-group.tags.Avalon
-    }
-}
+#  tags = {       
+#         Avalon = azurerm_resource_group.avalon-group.tags.Avalon
+#     }
+# }

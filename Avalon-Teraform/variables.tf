@@ -62,3 +62,15 @@ variable "sourceBranchName" {
 variable "auth0domain" {
   description = "Auth0 Domain Address"
 }
+
+variable "auth0apiIdentifier" {
+  description = "Auth0 ApiIdentifier Address"
+}
+
+variable "auth0claimsnameidentifier" {
+  description = "Auth0 Claims nameidentifier Address"
+}
+
+variable "auth0tokenaddress" {
+  description = "Auth0 Token Address"
+}
