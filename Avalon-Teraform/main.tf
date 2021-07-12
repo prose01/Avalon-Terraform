@@ -17,7 +17,7 @@ provider "azurerm" {
 
 # Create resource group
 resource "azurerm_resource_group" "avalon-group" {
-    name     = "Avalon-ResourceGroup-${var.sourceBranchName}"
+    name     = "Avalon-${var.sourceBranchName}"
     location = "${var.location}"
 
     tags = {
@@ -118,6 +118,9 @@ resource "azurerm_app_service_slot" "avalon-slot" {
     app_settings = {
         "Mongo_Database" = "Avalon"
         "Auth0_Domain" = "${var.auth0domain}"
+        "Auth0_ApiIdentifier" = "${var.auth0apiIdentifier}"
+        "Auth0_Claims_nameidentifier" = "${var.auth0claimsnameidentifier}"
+        "Auth0_TokenAddress" = "${var.auth0tokenaddress}"
     }
 
     # connection_string {
