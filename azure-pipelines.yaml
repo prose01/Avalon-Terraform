@@ -50,9 +50,9 @@ steps:
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
   
   # Delete everything by uncommenting the following section
-  # - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain-${{ variables.stageName }})" -var="auth0apiIdentifier=$(auth0apiIdentifier-${{ variables.stageName }})" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier-${{ variables.stageName }})" -var="auth0tokenaddress=$(auth0tokenaddress-${{ variables.stageName }})"
-  #   displayName: 'Terraform Plan -destroy '
-  #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
+  - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain-${{ variables.stageName }})" -var="auth0apiIdentifier=$(auth0apiIdentifier-${{ variables.stageName }})" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier-${{ variables.stageName }})" -var="auth0tokenaddress=$(auth0tokenaddress-${{ variables.stageName }})"
+    displayName: 'Terraform Plan -destroy '
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
 
   - task: ArchiveFiles@2
     displayName: 'Archive Terraform Plan Files'
