@@ -28,7 +28,7 @@ variables:
   state_file: "tf-statefile.state"
 
 steps:
-  - script: echo auth0domain=$(auth0domain-${{ variables.stageName }})
+  # - script: echo ${{ variables.stageName }}
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
     displayName: 'Install Terraform 0.13.5'
     inputs:
@@ -45,7 +45,7 @@ steps:
     displayName: 'Terraform Validate' 
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
 
-  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain)" -var="auth0apiIdentifier=$(auth0apiIdentifier)" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier)" -var="auth0tokenaddress=$(auth0tokenaddress)"
+  - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain-${{ variables.stageName }})" -var="auth0apiIdentifier=$(auth0apiIdentifier-${{ variables.stageName }})" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier-${{ variables.stageName }})" -var="auth0tokenaddress=$(auth0tokenaddress-${{ variables.stageName }})"
     displayName: 'Terraform Plan'
     workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
   
