@@ -1,7 +1,7 @@
 trigger:
   paths:
     include:
-      - /Avalon-Teraform/variables.tf
+      - /Avalon-Terraform/variables.tf
       - /v/main.tf
 
 pool:
@@ -39,25 +39,25 @@ steps:
 
   - script: terraform init -backend-config=resource_group_name=${{variables.sa_resource_group}} -backend-config="storage_account_name=${{variables.storage_accounts}}" -backend-config="container_name=${{variables.blob_storage}}" -backend-config="access_key=$(terraformdevops01-key1)" -backend-config="key=${{variables.state_file}}"
     displayName: 'Terraform Init'
-    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
   
   - script: terraform validate
     displayName: 'Terraform Validate' 
-    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
 
   - script: terraform plan -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain-${{ variables.stageName }})" -var="auth0apiIdentifier=$(auth0apiIdentifier-${{ variables.stageName }})" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier-${{ variables.stageName }})" -var="auth0tokenaddress=$(auth0tokenaddress-${{ variables.stageName }})"
     displayName: 'Terraform Plan'
-    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
   
   # Delete everything by uncommenting the following section
   - script: terraform plan -destroy -input=false -out="tfplan" -var="client_id=$(devops-service-principal-client-id)" -var="client_secret=$(devops-service-principal-secret)" -var="tenant_id=$(devops-service-principal-tenant-id)" -var="subscription_id=${{variables.subscription_id}}" -var="sourceBranchName=${{variables.stageName}}" -var="auth0domain=$(auth0domain-${{ variables.stageName }})" -var="auth0apiIdentifier=$(auth0apiIdentifier-${{ variables.stageName }})" -var="auth0claimsnameidentifier=$(auth0claimsnameidentifier-${{ variables.stageName }})" -var="auth0tokenaddress=$(auth0tokenaddress-${{ variables.stageName }})"
     displayName: 'Terraform Plan -destroy '
-    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
+    workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform
 
   - task: ArchiveFiles@2
     displayName: 'Archive Terraform Plan Files'
     inputs:
-      rootFolderOrFile: Avalon-Teraform
+      rootFolderOrFile: Avalon-Terraform
       archiveType: tar
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-tfplan.tgz'
 
@@ -69,4 +69,4 @@ steps:
 
   # - script: terraform apply out.plan
   #   displayName: 'Terraform Apply'
-  #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Teraform
+  #   workingDirectory: $(System.DefaultWorkingDirectory)/Avalon-Terraform

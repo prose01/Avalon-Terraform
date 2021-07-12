@@ -57,6 +57,7 @@ variable "storage_replication_type" {
 
 variable "sourceBranchName" {
   description = "Build Source Branch Name"
+  default     = "dev"
 }
 
 variable "auth0domain" {
