@@ -28,7 +28,7 @@ variables:
   state_file: "tf-statefile.state"
 
 steps:
-  - script: echo auth0domain=$(auth0domain)
+  - script: echo auth0domain=$(auth0domain-${{ variables.stageName }})
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
     displayName: 'Install Terraform 0.13.5'
     inputs:
