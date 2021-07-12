@@ -26,6 +26,7 @@ variables:
   
   blob_storage: "avalon-terraform-state-${{ variables.stageName }}"
   state_file: "tf-statefile.state"
+  auth0domain: $(auth0domain)
 
 steps:
   # - script: echo ${{variables.subscription_id}}
