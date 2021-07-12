@@ -130,7 +130,7 @@ resource "azurerm_app_service_slot" "avalon-slot" {
     }
 
     logs {
-        application_logs {
+        http_logs {
             file_system {
                 retention_in_mb = 30 # in Megabytes
                 retention_in_days = 7 # in days
