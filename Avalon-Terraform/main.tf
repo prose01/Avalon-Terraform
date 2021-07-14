@@ -63,11 +63,14 @@ resource "azurerm_app_service" "avalon" {
     }
 
     app_settings = {
+        "AllowedHosts" = "${var.allowedhosts}"
         "Mongo_Database" = "Avalon"
         "Auth0_Domain" = "${var.auth0domain}"
         "Auth0_ApiIdentifier" = "${var.auth0apiIdentifier}"
         "Auth0_Claims_nameidentifier" = "${var.auth0claimsnameidentifier}"
         "Auth0_TokenAddress" = "${var.auth0tokenaddress}"
+        "MaxIsBookmarked" = "10"
+        "MaxVisited" = "10"
     }
 
     # connection_string {
@@ -116,11 +119,14 @@ resource "azurerm_app_service_slot" "avalon-slot" {
     }
 
     app_settings = {
+        "AllowedHosts" = "${var.allowedhosts}"
         "Mongo_Database" = "Avalon"
         "Auth0_Domain" = "${var.auth0domain}"
         "Auth0_ApiIdentifier" = "${var.auth0apiIdentifier}"
         "Auth0_Claims_nameidentifier" = "${var.auth0claimsnameidentifier}"
         "Auth0_TokenAddress" = "${var.auth0tokenaddress}"
+        "MaxIsBookmarked" = "10"
+        "MaxVisited" = "10"
     }
 
     # connection_string {
