@@ -52,8 +52,7 @@ resource "azurerm_app_service" "avalon" {
 
     site_config {
         dotnet_framework_version = "v5.0"
-        dotnet_core_version = "v5.0"
-        linux_fx_version = "v5.0"
+        linux_fx_version = "DOTNETCORE|v5.0"
         # remote_debugging_enabled = true
         # remote_debugging_version = "VS2019"
         always_on = "true"
@@ -110,6 +109,7 @@ resource "azurerm_app_service_slot" "avalon-slot" {
 
     site_config {
         dotnet_framework_version = "v5.0"
+        linux_fx_version = "DOTNETCORE|v5.0"
         # remote_debugging_enabled = true
         # remote_debugging_version = "VS2019"
         always_on = "true"
